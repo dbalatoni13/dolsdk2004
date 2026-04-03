@@ -789,8 +789,8 @@ void DEMOWinPadRead(DEMOWinPadInfo* p) {
               | (pad->substickX    <  -0x40 ? 0x00800000 : 0)
               | (pad->substickY    >  +0x40 ? 0x00100000 : 0)
               | (pad->substickY    <  -0x40 ? 0x00200000 : 0) 
-              | (pad->triggerLeft  >  +0x80 ? 0x02000000 : 0)
-              | (pad->triggerRight >  +0x80 ? 0x01000000 : 0) 
+              | (pad->triggerL  >  +0x80 ? 0x02000000 : 0)
+              | (pad->triggerR >  +0x80 ? 0x01000000 : 0) 
               | pad->button);
 
         p->changed_button[index] = (curr & (old ^ curr));

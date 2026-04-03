@@ -138,8 +138,8 @@ static void UpdateOrigin(s32 chan) {
     case 0x00000500u:
     case 0x00000600u:
     case 0x00000700u:
-        origin->triggerLeft &= ~15;
-        origin->triggerRight &= ~15;
+        origin->triggerL &= ~15;
+        origin->triggerR &= ~15;
         origin->analogA &= ~15;
         origin->analogB &= ~15;
         break;
@@ -152,8 +152,8 @@ static void UpdateOrigin(s32 chan) {
     case 0x00000200u:
         origin->substickX &= ~15;
         origin->substickY &= ~15;
-        origin->triggerLeft &= ~15;
-        origin->triggerRight &= ~15;
+        origin->triggerL &= ~15;
+        origin->triggerR &= ~15;
         break;
     case 0x00000300u: break;
     case 0x00000400u: break;
@@ -573,13 +573,13 @@ static void SPEC0_MakeStatus(s32 chan, PADStatus* status, u32 data[2]) {
     status->stickY = (s8)(data[1] >> 24);
     status->substickX = (s8)(data[1]);
     status->substickY = (s8)(data[1] >> 8);
-    status->triggerLeft = (u8)(data[0] >> 8);
-    status->triggerRight = (u8)data[0];
+    status->triggerL = (u8)(data[0] >> 8);
+    status->triggerR = (u8)data[0];
     status->analogA = 0;
     status->analogB = 0;
-    if (170 <= status->triggerLeft)
+    if (170 <= status->triggerL)
         status->button |= PAD_TRIGGER_L;
-    if (170 <= status->triggerRight)
+    if (170 <= status->triggerR)
         status->button |= PAD_TRIGGER_R;
     status->stickX -= 128;
     status->stickY -= 128;
@@ -600,15 +600,15 @@ static void SPEC1_MakeStatus(s32 chan, PADStatus* status, u32 data[2]) {
     status->substickX = (s8)(data[1]);
     status->substickY = (s8)(data[1] >> 8);
 
-    status->triggerLeft = (u8)(data[0] >> 8);
-    status->triggerRight = (u8)data[0];
+    status->triggerL = (u8)(data[0] >> 8);
+    status->triggerR = (u8)data[0];
 
     status->analogA = 0;
     status->analogB = 0;
 
-    if (170 <= status->triggerLeft)
+    if (170 <= status->triggerL)
         status->button |= PAD_TRIGGER_L;
-    if (170 <= status->triggerRight)
+    if (170 <= status->triggerR)
         status->button |= PAD_TRIGGER_R;
 
     status->stickX -= 128;
@@ -650,40 +650,40 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2]) {
     case 0x00000700:
         status->substickX = (s8)(data[1] >> 24);
         status->substickY = (s8)(data[1] >> 16);
-        status->triggerLeft = (u8)(((data[1] >> 12) & 0x0f) << 4);
-        status->triggerRight = (u8)(((data[1] >> 8) & 0x0f) << 4);
+        status->triggerL = (u8)(((data[1] >> 12) & 0x0f) << 4);
+        status->triggerR = (u8)(((data[1] >> 8) & 0x0f) << 4);
         status->analogA = (u8)(((data[1] >> 4) & 0x0f) << 4);
         status->analogB = (u8)(((data[1] >> 0) & 0x0f) << 4);
         break;
     case 0x00000100:
         status->substickX = (s8)(((data[1] >> 28) & 0x0f) << 4);
         status->substickY = (s8)(((data[1] >> 24) & 0x0f) << 4);
-        status->triggerLeft = (u8)(data[1] >> 16);
-        status->triggerRight = (u8)(data[1] >> 8);
+        status->triggerL = (u8)(data[1] >> 16);
+        status->triggerR = (u8)(data[1] >> 8);
         status->analogA = (u8)(((data[1] >> 4) & 0x0f) << 4);
         status->analogB = (u8)(((data[1] >> 0) & 0x0f) << 4);
         break;
     case 0x00000200:
         status->substickX = (s8)(((data[1] >> 28) & 0x0f) << 4);
         status->substickY = (s8)(((data[1] >> 24) & 0x0f) << 4);
-        status->triggerLeft = (u8)(((data[1] >> 20) & 0x0f) << 4);
-        status->triggerRight = (u8)(((data[1] >> 16) & 0x0f) << 4);
+        status->triggerL = (u8)(((data[1] >> 20) & 0x0f) << 4);
+        status->triggerR = (u8)(((data[1] >> 16) & 0x0f) << 4);
         status->analogA = (u8)(data[1] >> 8);
         status->analogB = (u8)(data[1] >> 0);
         break;
     case 0x00000300:
         status->substickX = (s8)(data[1] >> 24);
         status->substickY = (s8)(data[1] >> 16);
-        status->triggerLeft = (u8)(data[1] >> 8);
-        status->triggerRight = (u8)(data[1] >> 0);
+        status->triggerL = (u8)(data[1] >> 8);
+        status->triggerR = (u8)(data[1] >> 0);
         status->analogA = 0;
         status->analogB = 0;
         break;
     case 0x00000400:
         status->substickX = (s8)(data[1] >> 24);
         status->substickY = (s8)(data[1] >> 16);
-        status->triggerLeft = 0;
-        status->triggerRight = 0;
+        status->triggerL = 0;
+        status->triggerR = 0;
         status->analogA = (u8)(data[1] >> 8);
         status->analogB = (u8)(data[1] >> 0);
         break;
@@ -710,8 +710,8 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2]) {
     status->stickY = ClampS8(status->stickY, origin->stickY);
     status->substickX = ClampS8(status->substickX, origin->substickX);
     status->substickY = ClampS8(status->substickY, origin->substickY);
-    status->triggerLeft = ClampU8(status->triggerLeft, origin->triggerLeft);
-    status->triggerRight = ClampU8(status->triggerRight, origin->triggerRight);
+    status->triggerL = ClampU8(status->triggerL, origin->triggerL);
+    status->triggerR = ClampU8(status->triggerR, origin->triggerR);
 }
 
 int PADGetType(s32 chan, u32* type) {

@@ -102,8 +102,8 @@ void DEMOPadInit(void) {
         DemoPad[i].pst.stickY = 0;
         DemoPad[i].pst.substickX = 0;
         DemoPad[i].pst.substickY = 0;
-        DemoPad[i].pst.triggerLeft = 0;
-        DemoPad[i].pst.triggerRight = 0;
+        DemoPad[i].pst.triggerL = 0;
+        DemoPad[i].pst.triggerR = 0;
         DemoPad[i].pst.analogA = 0;
         DemoPad[i].pst.analogB = 0;
         DemoPad[i].pst.err = 0;
